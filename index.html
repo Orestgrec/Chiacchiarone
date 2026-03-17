@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagina accattivante</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg1: #0a0a0f;
+      --bg2: #111827;
+      --violet: #8b5cf6;
+      --cyan: #22d3ee;
+      --pink: #ec4899;
+      --white: rgba(255,255,255,0.96);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.28), transparent 28%),
+        radial-gradient(circle at 85% 75%, rgba(34, 211, 238, 0.22), transparent 30%),
+        radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.12), transparent 35%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 55%, #030712);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 85%);
+      opacity: 0.22;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(70px);
+      opacity: 0.42;
+      animation: drift 10s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .orb.one {
+      width: 320px;
+      height: 320px;
+      background: var(--violet);
+      top: -80px;
+      left: -70px;
+    }
+
+    .orb.two {
+      width: 360px;
+      height: 360px;
+      background: var(--cyan);
+      right: -100px;
+      bottom: -100px;
+      animation-delay: -3s;
+    }
+
+    .orb.three {
+      width: 240px;
+      height: 240px;
+      background: var(--pink);
+      top: 15%;
+      right: 18%;
+      animation-delay: -6s;
+    }
+
+    .sparkles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .sparkles span {
+      position: absolute;
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 12px rgba(255,255,255,0.8);
+      animation: twinkle 4s infinite ease-in-out;
+    }
+
+    .sparkles span:nth-child(1) { top: 12%; left: 18%; animation-delay: 0s; }
+    .sparkles span:nth-child(2) { top: 20%; left: 72%; animation-delay: 1s; }
+    .sparkles span:nth-child(3) { top: 68%; left: 14%; animation-delay: 2s; }
+    .sparkles span:nth-child(4) { top: 76%; left: 80%; animation-delay: 0.5s; }
+    .sparkles span:nth-child(5) { top: 34%; left: 88%; animation-delay: 1.7s; }
+    .sparkles span:nth-child(6) { top: 56%; left: 58%; animation-delay: 2.4s; }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      width: min(920px, calc(100vw - 32px));
+      padding: 56px 42px;
+      border-radius: 28px;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.14),
+        rgba(255,255,255,0.06)
+      );
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+      text-align: center;
+      overflow: hidden;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 30px;
+      padding: 2px;
+      background: linear-gradient(120deg, rgba(139,92,246,0.9), rgba(34,211,238,0.9), rgba(236,72,153,0.8));
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.75;
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, transparent 20%, rgba(255,255,255,0.14) 50%, transparent 80%);
+      transform: translateX(-120%);
+      animation: sweep 5.5s linear infinite;
+      pointer-events: none;
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(2.3rem, 7vw, 5.4rem);
+      line-height: 1.04;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: linear-gradient(90deg, #ffffff, #ddd6fe, #a5f3fc, #fbcfe8, #ffffff);
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine 6s linear infinite;
+      text-shadow: 0 0 28px rgba(255,255,255,0.08);
+      word-break: break-word;
+    }
+
+    @keyframes shine {
+      0% { background-position: 0% center; }
+      100% { background-position: 220% center; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(18px, -14px) scale(1.08); }
+    }
+
+    @keyframes sweep {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(120%); }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.25; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 40px 22px;
+        border-radius: 22px;
+      }
+
+      h1 {
+        letter-spacing: 0.03em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+
+  <div class="orb one"></div>
+  <div class="orb two"></div>
+  <div class="orb three"></div>
+
+  <div class="sparkles">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="card">
+    <h1>chiacchierone sei un coglione</h1>
+  </div>
+</body>
+</html>
